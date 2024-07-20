@@ -1,7 +1,7 @@
 # CTF_y3ar_0f_th3_f0x
 walkthrough yearofthefox
 
-*Capture the flag classificado como Difícil 
+*Nivel HARD
 
 ******************************************************************************************
 Vou começar enumerando os serviços no host com o Nmap.
