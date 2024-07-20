@@ -119,7 +119,7 @@ e temos a SEGUNDA FLAG
 ******************************************************************************************
 
 verifiquei os priviçegios do fox com sudo -l e mostra que podemos executar o shutdown como root sem senha.
-Ao realizar eng reversa no codigo mostra que o executável de desligamento provavelmente foi escrito pelo autor do desafio. ele depende da função de desligamento
+Ao realizar eng reversa mostra que o executável de desligamento provavelmente foi escrito pelo autor do desafio. ele depende da função de desligamento
 
 void main() {
     system("poweroff");
