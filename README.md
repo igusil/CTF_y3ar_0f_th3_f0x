@@ -1,7 +1,7 @@
 # CTF_y3ar_0f_th3_f0x
 walkthrough yearofthefox
 ******************************************************************************************
-Vamos começar enumerando os serviços no host com o Nmap.
+Voucomeçar enumerando os serviços no host com o Nmap.
 
 ![fox0 2](https://github.com/user-attachments/assets/9497c669-b7f2-4bdd-8510-cd86bffa1d11)
 
@@ -11,7 +11,7 @@ Usando o smbclient, existe um compartilhamento chamado yotf, porem precisamos da
 ![fox0 3](https://github.com/user-attachments/assets/253ebfc0-6749-41c1-83a5-285e52290969)
 
 ******************************************************************************************
-Vamos usar o enum4linux para listar os usuários disponíveis. Encontramos 2 usuários válidos: fox e rascal.
+Vou usar o enum4linux para listar os usuários disponíveis. Encontramos 2 usuários válidos: fox e rascal.
 
 ![fox0 4](https://github.com/user-attachments/assets/f865ba47-1778-459e-b986-88271d0551ad)
 
@@ -20,10 +20,10 @@ Se no serviço da web não revelar senhas, precisaremos usar força bruta
 
 ![fox0 5](https://github.com/user-attachments/assets/454d2602-828d-4e07-a9e9-e710ece3911a)
 
-somos imediatamente bloqueados, pois todo o caminho é protegido por senha usando uma autenticação básica.
+sou imediatamente bloqueados, pois todo o caminho é protegido por senha usando uma autenticação básica.
 
 ******************************************************************************************
-Vamos tentar forçar a autenticação com hydra usando rascal como usuário
+Vou tentar forçar a autenticação com hydra usando rascal como usuário
 
 ![fox0 6](https://github.com/user-attachments/assets/075d4faf-9659-4af9-b5e1-d13ebf1e3cc8)
 
